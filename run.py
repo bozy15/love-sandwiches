@@ -109,6 +109,16 @@ def calculate_stock_data(data):
         new_stock_data.append(round(stock_num))
     return new_stock_data
 
+def get_stock_values(data):
+    """
+    Will retrieve stock values and assign values to a dictionary
+    """
+    headings = SHEET.worksheet("stock").row_values(1)
+    
+    dict_keys = {key:value for key, value in zip(headings, data)}
+    return dict_keys
+    
+
 
 def main():
     """
@@ -122,8 +132,10 @@ def main():
     sales_columns = get_last_5_entries_sales()
     stock_data = calculate_stock_data(sales_columns)
     update_worksheet(stock_data, "stock")
-
+    stock_values = get_stock_values(stock_data)
+    print(f"The amount of sandwiches you need to make for the next market: \n {stock_values} \n")
 
 
 print("Welcome to Love Sandwiches data automation")
 main()
+
